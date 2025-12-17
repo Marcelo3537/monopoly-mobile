@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Marcador de coordenadas del tablero</title>
+<style>
+  body { background: #111; color: white; text-align: center; font-family: sans-serif; }
+  img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border: 4px solid #ffa600;
+    cursor: crosshair;
+  }
+  #output {
+    white-space: pre;
+    background: #222;
+    padding: 1em;
+    border-radius: 8px;
+    width: 80%;
+    margin: 1em auto;
+    text-align: left;
+    font-family: monospace;
+    overflow-y: auto;
+    max-height: 50vh;
+  }
+</style>
+</head>
+<body>
+<h2>Haz clic en las 40 casillas del tablero en orden (desde ARRANCA → sentido horario)</h2>
+<img id="tablero" src="casino.png" alt="Tablero Casino y Tapas">
+<div id="output">// Coordenadas aquí</div>
+
+<script>
+const img = document.getElementById("tablero");
+const output = document.getElementById("output");
+const coords = [];
+
+img.addEventListener("click", e => {
+  const rect = img.getBoundingClientRect();
+  const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
+  const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
+  coords.push({ x: `${x}%`, y: `${y}%` });
+  output.textContent = JSON.stringify(coords, null, 2);
+  if (coords.length === 40) {
+    alert("✅ Has marcado las 40 casillas. Copia los datos del recuadro.");
+  }
+});
+</script>
+</body>
+</html>
